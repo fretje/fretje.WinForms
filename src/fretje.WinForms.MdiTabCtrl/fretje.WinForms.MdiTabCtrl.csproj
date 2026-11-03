@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-windows;net472</TargetFrameworks>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn);CA1010</NoWarn>
+
+    <!-- Package metadata -->
+    <PackageId>fretje.WinForms.MdiTabCtrl</PackageId>
+    <Description>A highly configurable MDI tab control for WinForms, converted from JacksiroKe/MdiTabCtrl</Description>
+    <PackageTags>winforms;mdi;tabcontrol;tabbed</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

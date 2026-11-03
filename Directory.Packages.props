@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup Label="Analyzers">
+    <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.12.1" />
+    <PackageVersion Include="Roslynator.Analyzers" Version="5.0.1" />
+    <PackageVersion Include="Roslynator.CodeFixes" Version="5.0.1" />
+    <PackageVersion Include="StyleCop.Analyzers" Version="1.3.133-beta" />
+  </ItemGroup>
+  <ItemGroup Label="MinVer">
+    <PackageVersion Include="MinVer" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup Label="PolySharp (source generators for .NET Framework)">
+    <PackageVersion Include="PolySharp" Version="1.16.0" />
+  </ItemGroup>
+</Project>
