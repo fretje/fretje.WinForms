@@ -48,15 +48,15 @@ jobs:
 
       - name: Push to nuget.org
         run: >
-          dotnet nuget push "artifacts/*.nupkg"
+          dotnet nuget push (Get-ChildItem -Path artifacts -Filter *.nupkg).FullName
           --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
           --source https://api.nuget.org/v3/index.json
           --skip-duplicate
 
       - name: Create GitHub release
         run: |
-          flags=""
-          if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags="--prerelease"; fi
-          gh release create "$GITHUB_REF_NAME" artifacts/*.nupkg --generate-notes --title "$GITHUB_REF_NAME" $flags
+          $pkgs = (Get-ChildItem -Path artifacts -Filter *.nupkg).FullName
+          $flags = if ($env:GITHUB_REF_NAME -match '-') { '--prerelease' } else { $null }
+          gh release create $env:GITHUB_REF_NAME $pkgs --generate-notes --title $env:GITHUB_REF_NAME $flags
         env:
           GH_TOKEN: ${{ github.token }}
