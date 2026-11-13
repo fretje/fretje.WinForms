@@ -1,7 +1,6 @@
 
 <Solution>
   <Folder Name="/.root/">
-    <File Path=".editorconfig" />
     <File Path=".gitattributes" />
     <File Path=".gitignore" />
     <File Path="global.json" />
@@ -15,13 +14,9 @@
     <File Path=".github/workflows/publish.yml" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/fretje.WinForms.MdiTabCtrl/fretje.WinForms.MdiTabCtrl.csproj">
-      <Name>fretje.WinForms.MdiTabCtrl</Name>
-    </Project>
+    <Project Path="src/fretje.WinForms.MdiTabCtrl/fretje.WinForms.MdiTabCtrl.csproj" />
   </Folder>
   <Folder Name="/samples/">
-    <Project Path="samples/fretje.WinForms.MdiTabCtrl.Sample/fretje.WinForms.MdiTabCtrl.Sample.csproj">
-      <Name>fretje.WinForms.MdiTabCtrl.Sample</Name>
-    </Project>
+    <Project Path="samples/fretje.WinForms.MdiTabCtrl.Sample/fretje.WinForms.MdiTabCtrl.Sample.csproj" />
   </Folder>
 </Solution>

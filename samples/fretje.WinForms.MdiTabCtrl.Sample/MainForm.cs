@@ -8,7 +8,7 @@ public partial class MainForm : Form
         AddSampleTabs();
     }
 
-    private static Form CreateSampleForm(string title, Color backColor)
+    private static Form CreateSampleForm(string title, in Color backColor)
     {
         Form form = new() { Text = title, BackColor = backColor };
 
@@ -34,7 +34,7 @@ public partial class MainForm : Form
                    """,
             Dock = DockStyle.Fill,
             TextAlign = ContentAlignment.MiddleCenter,
-            Font = new("Segoe UI", 12)
+            Font = new("Segoe UI", 12),
         });
 
         return form;
@@ -54,23 +54,17 @@ public partial class MainForm : Form
         // Tab 3: Form with custom text
         var form3 = CreateSampleForm("Custom Styled Tab", Color.LightYellow);
         _tabControl.TabPages.Add(form3);
-
-        // Select first tab
-        if (_tabControl.TabPages.Count > 0)
-        {
-            _tabControl.TabPages[0].Select();
-        }
     }
 
+    [SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "This is not security-sensitive")]
     private void OnNewTab(object? sender, EventArgs e)
     {
         Random random = new();
         var colors = new[] { Color.LightBlue, Color.LightGreen, Color.LightYellow, Color.LightPink, Color.LightCoral, Color.LightCyan };
         var color = colors[random.Next(colors.Length)];
 
-        var form = CreateSampleForm($"New Tab {DateTime.Now:HH:mm:ss}", color);
+        var form = CreateSampleForm($"New Tab {DateTime.UtcNow.ToLocalTime():HH:mm:ss}", in color);
         _tabControl.TabPages.Add(form);
-        _tabControl.TabPages[^1].Select();
     }
 
     private void OnExit(object? sender, EventArgs e) => Close();

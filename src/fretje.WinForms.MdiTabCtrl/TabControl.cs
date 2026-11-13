@@ -1,6 +1,5 @@
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Drawing2D;
 
 namespace fretje.WinForms.MdiTabCtrl;
@@ -8,6 +7,7 @@ namespace fretje.WinForms.MdiTabCtrl;
 [DesignTimeVisible(true)]
 public partial class TabControl : UserControl
 {
+    internal const ToolStripRenderMode _defaultRenderMode = ToolStripRenderMode.ManagerRenderMode;
     internal static readonly Padding _defaultPadding = new(0, 0, 0, 0);
     internal static readonly Color _defaultBackLowColor = SystemColors.ControlLightLight;
     internal static readonly Color _defaultBackHighColor = SystemColors.Control;
@@ -36,10 +36,10 @@ public partial class TabControl : UserControl
     internal static readonly Color _defaultTabCloseButtonForeColor = Color.White;
     internal static readonly Color _defaultTabCloseButtonForeColorDisabled = Color.White;
     internal static readonly Color _defaultTabCloseButtonForeColorHot = Color.White;
-    internal static readonly ToolStripRenderMode _defaultRenderMode = ToolStripRenderMode.ManagerRenderMode;
 
-    private readonly int _leftOffset = 3;
+    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is disposed in the Disposed handler")]
     private readonly Panel _background = new();
+    private readonly int _leftOffset = 3;
     private bool _addingPage;
     private bool _isDelete;
     private Color _backLowColor;
@@ -105,6 +105,7 @@ public partial class TabControl : UserControl
         DropButton.RenderMode = RenderMode;
         CloseButton.RenderMode = RenderMode;
         ResumeLayout();
+        Disposed += (_, _) => _background.Dispose();
     }
 
     [Description("Occurs when the Tab Page requests the tab region.")]
@@ -141,7 +142,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            SelectItem(null);
+            SelectItem(tabPage: null);
         }
     }
 
@@ -605,7 +606,7 @@ public partial class TabControl : UserControl
         = TabAlignment.Top;
 
     [Category("Layout"), Description("Gets or sets the amount of space around the form on the control's tab pages.")]
-    public new Padding Padding
+    new public Padding Padding
     {
         get => pnlBottom.Padding;
         set => pnlBottom.Padding = value;
@@ -722,7 +723,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            if (value != null)
+            if (value is { })
             {
                 WinMenu.Renderer = value;
             }
@@ -949,7 +950,7 @@ public partial class TabControl : UserControl
 
     private void AdjustHeight()
     {
-        if (Alignment == TabAlignment.Top)
+        if (Alignment is TabAlignment.Top)
         {
             pnlTop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlTop.Height = pnlTabs.Height + TabTop;
@@ -973,7 +974,7 @@ public partial class TabControl : UserControl
 
     private void ArrangeItems()
     {
-        if (TabPages.Count == 0)
+        if (TabPages.Count is 0)
         {
             return;
         }
@@ -1019,7 +1020,7 @@ public partial class TabControl : UserControl
 
     private void CheckVisibility()
     {
-        if (TabPages == null)
+        if (TabPages is null)
         {
             return;
         }
@@ -1062,7 +1063,7 @@ public partial class TabControl : UserControl
     private void ShowTab(int i)
     {
         TabPages[i].Visible = TabPages[i].TabVisible;
-        if (TabPages[0].Width != 1)
+        if (TabPages[0].Width is not 1)
         {
             TabPages[i].Left = TabPages[i].TabLeft;
         }
@@ -1075,11 +1076,11 @@ public partial class TabControl : UserControl
             t.IsSelected = false;
         }
 
-        if (tabPage != null)
+        if (tabPage is { })
         {
             foreach (TabPage t in TabPages)
             {
-                if (TabsDirection == FlowDirection.LeftToRight)
+                if (TabsDirection is FlowDirection.LeftToRight)
                 {
                     t.SendToBack();
                 }
@@ -1101,7 +1102,7 @@ public partial class TabControl : UserControl
             }
 
             tabPage.IsSelected = true;
-            if (!tabPage.TabVisible && TabPages.IndexOf(tabPage) != 0)
+            if (!tabPage.TabVisible && TabPages.IndexOf(tabPage) is not 0)
             {
                 TabPages.SetIndex(tabPage, 0);
             }
@@ -1149,7 +1150,7 @@ public partial class TabControl : UserControl
 
     private void PositionButtons()
     {
-        DropButton.Top = (int)Math.Ceiling((pnlTop.Height - DropButton.Height) / 2.0) + ((Alignment == TabAlignment.Top && TopSeparator) ? -1 : 0);
+        DropButton.Top = (int)Math.Ceiling((pnlTop.Height - DropButton.Height) / 2.0) + (Alignment is TabAlignment.Top && TopSeparator ? -1 : 0);
         CloseButton.Top = DropButton.Top;
     }
 
@@ -1161,7 +1162,7 @@ public partial class TabControl : UserControl
         }
 
         using Pen pen = new(Helper.RenderColors.BorderColor(_renderMode, BorderColor));
-        if (Alignment == TabAlignment.Top)
+        if (Alignment is TabAlignment.Top)
         {
             e.Graphics.DrawLine(pen, 0, pnlTop.Height - 1, pnlTop.Width + 1, pnlTop.Height - 1);
         }
@@ -1193,26 +1194,26 @@ public partial class TabControl : UserControl
 
     private void CloseButton_MouseDown(object? sender, MouseEventArgs e) => TabPages.SelectedTab()?.InternalForm.Close();
 
-    private void TabPages_GetTabRegion(object? sender, GetTabRegionEventArgs e) => GetTabRegion?.Invoke(sender, e);
+    private void TabPages_GetTabRegion(object? sender, GetTabRegionEventArgs e) => GetTabRegion?.Invoke(this, e);
 
-    private void TabPages_SelectedChanged(object? sender, EventArgs e) => SelectedTabChanged?.Invoke(sender, e);
+    private void TabPages_SelectedChanged(object? sender, EventArgs e) => SelectedTabChanged?.Invoke(this, e);
 
-    private void TabPages_TabPaintBackground(object? sender, TabPaintEventArgs e) => TabPaintBackground?.Invoke(sender, e);
+    private void TabPages_TabPaintBackground(object? sender, TabPaintEventArgs e) => TabPaintBackground?.Invoke(this, e);
 
-    private void TabPages_TabPaintBorder(object? sender, TabPaintEventArgs e) => TabPaintBorder?.Invoke(sender, e);
+    private void TabPages_TabPaintBorder(object? sender, TabPaintEventArgs e) => TabPaintBorder?.Invoke(this, e);
 
-    private void TabPages_TabRemoved(object? sender, TabPage e) => TabRemoved?.Invoke(sender, EventArgs.Empty);
+    private void TabPages_TabRemoved(object? sender, EventArgs e) => TabRemoved?.Invoke(this, e);
 
     private void Owner_KeyDown(object? sender, KeyEventArgs e)
     {
-        if (TabPages.Count == 0)
+        if (TabPages.Count is 0)
         {
             return;
         }
 
         KeyHandledEventArgs ke = new();
         int index;
-        if (KeyTabEnabled && e.KeyCode == Keys.Tab && e.Control && !e.Alt)
+        if (KeyTabEnabled && e.KeyCode is Keys.Tab && e.Control && !e.Alt)
         {
             if (e.Shift)
             {
@@ -1241,7 +1242,7 @@ public partial class TabControl : UserControl
                 TabPages[index].Select();
             }
         }
-        else if (KeyCloseEnabled && e.KeyCode == Keys.F4 && e.Control && !e.Shift && !e.Alt)
+        else if (KeyCloseEnabled && e.KeyCode is Keys.F4 && e.Control && !e.Shift && !e.Alt)
         {
             ke.Index = TabPages.SelectedIndex();
             ke.Handled = false;
@@ -1334,7 +1335,7 @@ public partial class TabControl : UserControl
     }
 
     [Description("Contains a collection of MdiTabCtrl.TabPage objects.")]
-    public class TabPageCollection : CollectionBase
+    public sealed class TabPageCollection : CollectionBase
     {
         private readonly TabControl _tabControl;
         private bool _isReorder;
@@ -1352,7 +1353,7 @@ public partial class TabControl : UserControl
 
         internal event EventHandler? SelectedChanged;
 
-        internal event EventHandler<TabPage>? TabRemoved;
+        internal event EventHandler? TabRemoved;
 
         [Description("Gets a TabPage in the position Index from the collection.")]
         public TabPage this[int index] => (TabPage)List[index]!;
@@ -1479,7 +1480,7 @@ public partial class TabControl : UserControl
                 }
 
                 List.Remove(tabPage);
-                TabRemoved?.Invoke(this, tabPage);
+                TabRemoved?.Invoke(this, EventArgs.Empty);
             }
             catch { }
         }
@@ -1548,7 +1549,7 @@ public partial class TabControl : UserControl
                 return;
             }
 
-            if (List.Count == 0)
+            if (List.Count is 0)
             {
                 _tabControl._background.Visible = true;
             }
@@ -1558,7 +1559,7 @@ public partial class TabControl : UserControl
             ((TabPage)value).InternalForm.Dispose();
             _tabControl.pnlTabs.Controls.Remove((TabPage)value);
             ((TabPage)value).Dispose();
-            _tabControl.SelectItem(null);
+            _tabControl.SelectItem(tabPage: null);
         }
 
         protected override void OnClear()
@@ -1577,25 +1578,25 @@ public partial class TabControl : UserControl
         private void TabPage_Clicked(object? sender, EventArgs e)
         {
             _tabControl.SelectItem((TabPage)sender!);
-            SelectedChanged?.Invoke(sender, e);
+            SelectedChanged?.Invoke(this, e);
         }
 
         private void TabPage_Closed(object? sender, EventArgs e) => Remove((TabPage)sender!);
 
-        private void TabPage_GetTabRegion(object? sender, GetTabRegionEventArgs e) => GetTabRegion?.Invoke(sender, e);
+        private void TabPage_GetTabRegion(object? sender, GetTabRegionEventArgs e) => GetTabRegion?.Invoke(this, e);
 
-        private void TabPage_TabPaintBackground(object? sender, TabPaintEventArgs e) => TabPaintBackground?.Invoke(sender, e);
+        private void TabPage_TabPaintBackground(object? sender, TabPaintEventArgs e) => TabPaintBackground?.Invoke(this, e);
 
-        private void TabPage_TabPaintBorder(object? sender, TabPaintEventArgs e) => TabPaintBorder?.Invoke(sender, e);
+        private void TabPage_TabPaintBorder(object? sender, TabPaintEventArgs e) => TabPaintBorder?.Invoke(this, e);
 
         private void TabPage_SizeChanged(object? sender, EventArgs e) => _tabControl.ArrangeItems();
 
         private void TabPage_Dragging(object? sender, MouseEventArgs e)
         {
-            if (_tabControl.AllowTabReorder && e.Button == MouseButtons.Left)
+            if (_tabControl.AllowTabReorder && e.Button is MouseButtons.Left)
             {
                 var t = GetTabPage((TabPage)sender!, e.X, e.Y);
-                if (t == null)
+                if (t is null)
                 {
                     _currentTab = null;
                 }

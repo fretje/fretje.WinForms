@@ -5,11 +5,7 @@ using System.Runtime.InteropServices;
 namespace fretje.WinForms.MdiTabCtrl;
 
 [DesignTimeVisible(false), Description("Represents a single tab page in a MdiTabCtrl.TabControl.")]
-public
-#if NET
-partial
-#endif
-class TabPage : Control
+public partial class TabPage : Control
 {
     private bool _hot;
     private Size _closeButtonSize;
@@ -17,6 +13,7 @@ class TabPage : Control
     private bool _painting;
     private bool _mouseOverCloseButton;
 
+    [SuppressMessage("Design", "MA0056:Do not call overridable members in constructor", Justification = "How else would we initialize the BackColor?")]
     public TabPage(Form form)
     {
         InitializeComponent();
@@ -36,7 +33,7 @@ class TabPage : Control
         InternalForm = form;
 
         MenuItem.Text = form.Text;
-        if (form.Icon != null)
+        if (form.Icon is { })
         {
             MenuItem.Image = form.Icon.ToBitmap();
         }
@@ -48,11 +45,11 @@ class TabPage : Control
         InternalForm.Leave += Form_Leave;
         InternalForm.TextChanged += TabContent_TextChanged;
 
-        ResumeLayout(false);
+        ResumeLayout(performLayout: false);
     }
 
     [Description("Occurs when the user clicks the Tab Control.")]
-    public new event EventHandler? Click;
+    new public event EventHandler? Click;
 
     internal event EventHandler? Close;
 
@@ -429,7 +426,7 @@ class TabPage : Control
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     internal ToolStripMenuItem MenuItem { get; set; } = new();
 
-    public new void Select()
+    new public void Select()
     {
         if (!IsSelected)
         {
@@ -484,7 +481,7 @@ class TabPage : Control
             e.Graphics.SmoothingMode = SmoothingMode;
             gp.AddPolygon(GetRegion(Width - 1, Height - 1, IsSelected ? Height : Height - 1));
 
-            if (Alignment == TabControl.TabAlignment.Bottom)
+            if (Alignment is TabControl.TabAlignment.Bottom)
             {
                 MirrorPath(gp);
                 (renderLowColor, renderHighColor) = (renderHighColor, renderLowColor);
@@ -517,7 +514,7 @@ class TabPage : Control
                     TabPaintBackground?.Invoke(this, te);
                     if (!te.Handled)
                     {
-                        using var gb = CreateGradientBrush(new Rectangle(0, 0, Width, Height), renderHighColor, renderLowColor);
+                        using var gb = CreateGradientBrush(new Rectangle(0, 0, Width, Height), in renderHighColor, in renderLowColor);
                         e.Graphics.FillPath(gb, gp);
                     }
                 }
@@ -529,7 +526,7 @@ class TabPage : Control
                     {
                         if (BorderEnhanced)
                         {
-                            var c = (Alignment == TabControl.TabAlignment.Bottom) ? renderLowColor : renderHighColor;
+                            var c = Alignment is TabControl.TabAlignment.Bottom ? renderLowColor : renderHighColor;
                             using Pen p = new(c, (float)BorderEnhanceWeight);
                             e.Graphics.DrawLines(p, gp.PathPoints);
                         }
@@ -569,7 +566,7 @@ class TabPage : Control
             MouseLeave -= Tab_MouseLeave;
             MouseMove -= Tab_MouseMove;
 
-            if (InternalForm != null)
+            if (InternalForm is { })
             {
                 InternalForm.Enter -= TabContents_Enter;
                 InternalForm.FormClosed -= TabContent_FormClosed;
@@ -592,9 +589,9 @@ class TabPage : Control
     private static extern bool DestroyIcon(IntPtr handle);
 #endif
 
-    private LinearGradientBrush CreateGradientBrush(Rectangle rectangle, Color color1, Color color2) =>
+    private LinearGradientBrush CreateGradientBrush(Rectangle rectangle, in Color color1, in Color color2) =>
         GlassGradient
-            ? Helper.CreateGlassGradientBrush(rectangle, color1, color2)
+            ? Helper.CreateGlassGradientBrush(rectangle, in color1, in color2)
             : new LinearGradientBrush(rectangle, color1, color2, LinearGradientMode.Vertical);
 
     private void TabContents_Enter(object? sender, EventArgs e) => EnterForm?.Invoke(this, e);
@@ -617,7 +614,7 @@ class TabPage : Control
             return;
         }
 
-        if (e.Button == MouseButtons.Left)
+        if (e.Button is MouseButtons.Left)
         {
             if (_mouseOverCloseButton && CloseButtonVisible)
             {
@@ -682,9 +679,9 @@ class TabPage : Control
 
     private void DrawText(Graphics g)
     {
-        using Font f = new(Font, (IsSelected && FontBoldOnSelect) ? FontStyle.Bold : FontStyle.Regular);
-        using SolidBrush b = new((IsSelected || _hot) ? ForeColor : ForeColorDisabled);
-        var iw = (InternalForm.Icon == null) ? 0 : _iconSize.Width;
+        using Font f = new(Font, IsSelected && FontBoldOnSelect ? FontStyle.Bold : FontStyle.Regular);
+        using SolidBrush b = new(IsSelected || _hot ? ForeColor : ForeColorDisabled);
+        var iw = InternalForm.Icon is null ? 0 : _iconSize.Width;
         var cbw = CloseButtonVisible ? _closeButtonSize.Width : 0;
         RectangleF bounds = new(
             PadLeft + iw + 2,
@@ -703,7 +700,7 @@ class TabPage : Control
     {
         try
         {
-            if (InternalForm.Icon == null)
+            if (InternalForm.Icon is null)
             {
                 return;
             }
@@ -728,25 +725,15 @@ class TabPage : Control
                 ? CloseButtonImageHot as Bitmap
                 : IsSelected ? CloseButtonImage as Bitmap : CloseButtonImageDisabled as Bitmap;
 
-            var isDisposable = false;
-            if (img == null)
-            {
-                img = GetButton();
-                isDisposable = true;
-            }
+            var button = img ?? GetButton();
+            using var _ = img is null ? button : null;
 
-            var hIcon = img.GetHicon();
-            using (var icon = Icon.FromHandle(hIcon))
-            {
-                Rectangle r = new(x, y, _closeButtonSize.Width, _closeButtonSize.Height);
-                g.DrawIcon(icon, r);
-                DestroyIcon(icon.Handle);
-            }
-
-            if (isDisposable)
-            {
-                img.Dispose();
-            }
+            // Use button below instead of img.
+            var hIcon = button.GetHicon();
+            using var icon = Icon.FromHandle(hIcon);
+            Rectangle r = new(x, y, _closeButtonSize.Width, _closeButtonSize.Height);
+            g.DrawIcon(icon, r);
+            DestroyIcon(icon.Handle);
         }
         catch { }
     }
@@ -827,7 +814,7 @@ class TabPage : Control
     private void CalculateWidth()
     {
         using var g = CreateGraphics();
-        var iw = (InternalForm.Icon == null) ? 0 : _iconSize.Width;
+        var iw = InternalForm.Icon is null ? 0 : _iconSize.Width;
         var cbw = CloseButtonVisible ? _closeButtonSize.Width : 0;
         var w = Width;
         using (Font f = new(Font, FontBoldOnSelect ? FontStyle.Bold : FontStyle.Regular))

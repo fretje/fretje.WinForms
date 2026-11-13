@@ -2,15 +2,11 @@ using System.Drawing.Drawing2D;
 
 namespace fretje.WinForms.MdiTabCtrl;
 
-/// <summary>
-/// Helper class containing rendering utilities and color management.
-/// </summary>
+/// <summary>Helper class containing rendering utilities and color management.</summary>
 internal static class Helper
 {
-    /// <summary>
-    /// Creates a glass gradient brush for tab backgrounds.
-    /// </summary>
-    public static LinearGradientBrush CreateGlassGradientBrush(Rectangle rectangle, Color color1, Color color2)
+    /// <summary>Creates a glass gradient brush for tab backgrounds.</summary>
+    public static LinearGradientBrush CreateGlassGradientBrush(Rectangle rectangle, in Color color1, in Color color2)
     {
         LinearGradientBrush brush = new(rectangle, color1, color2, LinearGradientMode.Vertical);
         Bitmap bitmap = new(1, rectangle.Height);
@@ -34,124 +30,122 @@ internal static class Helper
         return brush;
     }
 
-    /// <summary>
-    /// Color management for different render modes.
-    /// </summary>
+    /// <summary>Color management for different render modes.</summary>
     public static class RenderColors
     {
-        public static Color BackHighColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? Color.Transparent :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripGradientEnd :
+        public static Color BackHighColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? Color.Transparent :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripGradientEnd :
             managedColor;
 
-        public static Color BackLowColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? Color.Transparent :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripGradientBegin :
+        public static Color BackLowColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? Color.Transparent :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripGradientBegin :
             managedColor;
 
-        public static Color BorderColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ControlDarkDark :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.GripDark :
+        public static Color BorderColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ControlDarkDark :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.GripDark :
             managedColor;
 
-        public static Color BorderColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ControlDark :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.SeparatorDark :
+        public static Color BorderColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ControlDark :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.SeparatorDark :
             managedColor;
 
-        public static Color ControlButtonBackHighColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ButtonSelectedGradientBegin :
+        public static Color ControlButtonBackHighColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ButtonSelectedGradientBegin :
             managedColor;
 
-        public static Color ControlButtonBackLowColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ButtonSelectedGradientEnd :
+        public static Color ControlButtonBackLowColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ButtonSelectedGradientEnd :
             managedColor;
 
-        public static Color ControlButtonBorderColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.HotTrack :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ButtonPressedBorder :
+        public static Color ControlButtonBorderColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.HotTrack :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ButtonPressedBorder :
             managedColor;
 
-        public static Color TabBackHighColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.Control :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.MenuItemPressedGradientBegin :
+        public static Color TabBackHighColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.Control :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.MenuItemPressedGradientBegin :
             managedColor;
 
-        public static Color TabBackLowColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.Control :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.MenuItemPressedGradientEnd :
+        public static Color TabBackLowColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.Control :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.MenuItemPressedGradientEnd :
             managedColor;
 
-        public static Color TabBackHighColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.Control :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripDropDownBackground :
+        public static Color TabBackHighColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.Control :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripDropDownBackground :
             managedColor;
 
-        public static Color TabBackLowColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.Control :
-            renderMode == ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripGradientMiddle :
+        public static Color TabBackLowColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.Control :
+            renderMode is ToolStripRenderMode.Professional ? ProfessionalColors.ToolStripGradientMiddle :
             managedColor;
 
-        public static Color TabCloseButtonBackHighColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? Color.Transparent :
-            renderMode == ToolStripRenderMode.Professional ? Color.Transparent :
+        public static Color TabCloseButtonBackHighColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? Color.Transparent :
+            renderMode is ToolStripRenderMode.Professional ? Color.Transparent :
             managedColor;
 
-        public static Color TabCloseButtonBackHighColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? Color.Transparent :
-            renderMode == ToolStripRenderMode.Professional ? Color.Transparent :
+        public static Color TabCloseButtonBackHighColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? Color.Transparent :
+            renderMode is ToolStripRenderMode.Professional ? Color.Transparent :
             managedColor;
 
-        public static Color TabCloseButtonBackHighColorHot(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
-            renderMode == ToolStripRenderMode.Professional ? Color.WhiteSmoke :
+        public static Color TabCloseButtonBackHighColorHot(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
+            renderMode is ToolStripRenderMode.Professional ? Color.WhiteSmoke :
             managedColor;
 
-        public static Color TabCloseButtonBackLowColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? Color.Transparent :
-            renderMode == ToolStripRenderMode.Professional ? Color.Transparent :
+        public static Color TabCloseButtonBackLowColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? Color.Transparent :
+            renderMode is ToolStripRenderMode.Professional ? Color.Transparent :
             managedColor;
 
-        public static Color TabCloseButtonBackLowColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? Color.Transparent :
-            renderMode == ToolStripRenderMode.Professional ? Color.Transparent :
+        public static Color TabCloseButtonBackLowColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? Color.Transparent :
+            renderMode is ToolStripRenderMode.Professional ? Color.Transparent :
             managedColor;
 
-        public static Color TabCloseButtonBackLowColorHot(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
-            renderMode == ToolStripRenderMode.Professional ? Color.LightGray :
+        public static Color TabCloseButtonBackLowColorHot(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ButtonHighlight :
+            renderMode is ToolStripRenderMode.Professional ? Color.LightGray :
             managedColor;
 
-        public static Color TabCloseButtonBorderColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ControlDark :
-            renderMode == ToolStripRenderMode.Professional ? Color.Transparent :
+        public static Color TabCloseButtonBorderColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ControlDark :
+            renderMode is ToolStripRenderMode.Professional ? Color.Transparent :
             managedColor;
 
-        public static Color TabCloseButtonBorderColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.GrayText :
-            renderMode == ToolStripRenderMode.Professional ? Color.Transparent :
+        public static Color TabCloseButtonBorderColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.GrayText :
+            renderMode is ToolStripRenderMode.Professional ? Color.Transparent :
             managedColor;
 
-        public static Color TabCloseButtonBorderColorHot(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.HotTrack :
-            renderMode == ToolStripRenderMode.Professional ? Color.Gray :
+        public static Color TabCloseButtonBorderColorHot(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.HotTrack :
+            renderMode is ToolStripRenderMode.Professional ? Color.Gray :
             managedColor;
 
-        public static Color TabCloseButtonForeColor(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ControlText :
-            renderMode == ToolStripRenderMode.Professional ? Color.Gray :
+        public static Color TabCloseButtonForeColor(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ControlText :
+            renderMode is ToolStripRenderMode.Professional ? Color.Gray :
             managedColor;
 
-        public static Color TabCloseButtonForeColorDisabled(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.GrayText :
-            renderMode == ToolStripRenderMode.Professional ? Color.Gray :
+        public static Color TabCloseButtonForeColorDisabled(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.GrayText :
+            renderMode is ToolStripRenderMode.Professional ? Color.Gray :
             managedColor;
 
-        public static Color TabCloseButtonForeColorHot(ToolStripRenderMode renderMode, Color managedColor) =>
-            renderMode == ToolStripRenderMode.System ? SystemColors.ControlText :
-            renderMode == ToolStripRenderMode.Professional ? Color.Firebrick :
+        public static Color TabCloseButtonForeColorHot(ToolStripRenderMode renderMode, in Color managedColor) =>
+            renderMode is ToolStripRenderMode.System ? SystemColors.ControlText :
+            renderMode is ToolStripRenderMode.Professional ? Color.Firebrick :
             managedColor;
     }
 }

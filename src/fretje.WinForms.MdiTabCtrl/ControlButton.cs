@@ -3,9 +3,7 @@ using System.Drawing.Drawing2D;
 
 namespace fretje.WinForms.MdiTabCtrl;
 
-/// <summary>
-/// A custom control button (close or dropdown) for the tab control.
-/// </summary>
+/// <summary>A custom control button (close or dropdown) for the tab control.</summary>
 internal sealed class ControlButton : Control
 {
     private readonly Color _defaultBackHighColor = SystemColors.ControlLightLight;
@@ -111,13 +109,13 @@ internal sealed class ControlButton : Control
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             using (LinearGradientBrush brush = new(
                 new Point(0, 0), new Point(0, Height),
-                Helper.RenderColors.ControlButtonBackHighColor(RenderMode, _backHighColor),
-                Helper.RenderColors.ControlButtonBackLowColor(RenderMode, _backLowColor)))
+                Helper.RenderColors.ControlButtonBackHighColor(RenderMode, in _backHighColor),
+                Helper.RenderColors.ControlButtonBackLowColor(RenderMode, in _backLowColor)))
             {
                 e.Graphics.FillRectangle(brush, rec);
             }
 
-            using (Pen pen = new(Helper.RenderColors.ControlButtonBorderColor(RenderMode, _borderColor)))
+            using (Pen pen = new(Helper.RenderColors.ControlButtonBorderColor(RenderMode, in _borderColor)))
             {
                 e.Graphics.DrawRectangle(pen, rec);
             }
@@ -130,13 +128,13 @@ internal sealed class ControlButton : Control
         var x = (Width - 11) / 2;
         var y = ((Height - 11) / 2) + 1;
 
-        if (Style == ButtonStyle.Drop)
+        if (Style is ButtonStyle.Drop)
         {
-            e.Graphics.FillRectangle(new SolidBrush(ForeColor), x, y, 11, 2);
+            using SolidBrush brush = new(ForeColor);
+            e.Graphics.FillRectangle(brush, x, y, 11, 2);
             g.AddPolygon(dropPoints);
             m.Translate(x, y + 3);
             g.Transform(m);
-            using SolidBrush brush = new(ForeColor);
             e.Graphics.FillPolygon(brush, g.PathPoints);
         }
         else
