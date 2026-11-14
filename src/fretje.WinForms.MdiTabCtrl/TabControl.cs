@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
@@ -153,7 +153,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.GlassGradient = value;
             }
@@ -167,7 +167,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BorderEnhanced = value;
             }
@@ -218,7 +218,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.CloseButtonImage = value;
             }
@@ -233,7 +233,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.CloseButtonImageHot = value;
             }
@@ -248,7 +248,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.CloseButtonImageDisabled = value;
             }
@@ -262,7 +262,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.CloseButtonVisible = value;
             }
@@ -278,7 +278,7 @@ public partial class TabControl : UserControl
         set
         {
             _tabIconSize = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.IconSize = value;
             }
@@ -292,7 +292,7 @@ public partial class TabControl : UserControl
         set
         {
             _tabCloseButtonSize = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.CloseButtonSize = value;
             }
@@ -306,7 +306,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.SmoothingMode = value;
             }
@@ -322,7 +322,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.PadRight = value;
             }
@@ -338,7 +338,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.PadLeft = value;
             }
@@ -372,7 +372,7 @@ public partial class TabControl : UserControl
                 pnlTabs.Height = field;
                 pnlTabs.Top = pnlTop.Height - pnlTabs.Height;
                 AdjustHeight();
-                foreach (TabPage t in TabPages)
+                foreach (var t in TabPages)
                 {
                     t.Height = value;
                 }
@@ -402,7 +402,7 @@ public partial class TabControl : UserControl
         set
         {
             _tabBackHighColor = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BackHighColor = value;
             }
@@ -416,7 +416,7 @@ public partial class TabControl : UserControl
         set
         {
             _tabBackLowColor = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BackLowColor = value;
             }
@@ -430,7 +430,7 @@ public partial class TabControl : UserControl
         set
         {
             _tabBackHighColorDisabled = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BackHighColorDisabled = value;
             }
@@ -444,7 +444,7 @@ public partial class TabControl : UserControl
         set
         {
             _tabBackLowColorDisabled = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BackLowColorDisabled = value;
             }
@@ -458,7 +458,7 @@ public partial class TabControl : UserControl
         set
         {
             _torderColorDisabled = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BorderColorDisabled = value;
             }
@@ -472,7 +472,7 @@ public partial class TabControl : UserControl
         set
         {
             _foreColorDisabled = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.ForeColorDisabled = value;
             }
@@ -486,7 +486,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.MinimumWidth = value;
             }
@@ -502,7 +502,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.MaximumWidth = value;
             }
@@ -518,7 +518,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.FontBoldOnSelect = value;
             }
@@ -534,7 +534,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.HotTrack = value;
             }
@@ -596,7 +596,7 @@ public partial class TabControl : UserControl
             field = value;
             AdjustHeight();
             PositionButtons();
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.Alignment = value;
             }
@@ -685,7 +685,7 @@ public partial class TabControl : UserControl
         set
         {
             _borderColor = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BorderColor = value;
             }
@@ -708,7 +708,7 @@ public partial class TabControl : UserControl
             DropButton.RenderMode = value;
             CloseButton.RenderMode = value;
             WinMenu.RenderMode = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.RenderMode = value;
             }
@@ -737,7 +737,7 @@ public partial class TabControl : UserControl
         set
         {
             field = value;
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 t.BorderEnhanceWeight = value;
             }
@@ -1071,14 +1071,14 @@ public partial class TabControl : UserControl
 
     private void SelectItem(TabPage? tabPage)
     {
-        foreach (TabPage t in TabPages)
+        foreach (var t in TabPages)
         {
             t.IsSelected = false;
         }
 
         if (tabPage is { })
         {
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 if (TabsDirection is FlowDirection.LeftToRight)
                 {
@@ -1109,7 +1109,7 @@ public partial class TabControl : UserControl
         }
         else if (pnlTabs.Controls.Count > 0)
         {
-            foreach (TabPage t in TabPages)
+            foreach (var t in TabPages)
             {
                 if (t.InternalForm.Equals(pnlBottom.Controls[0]))
                 {
@@ -1122,7 +1122,7 @@ public partial class TabControl : UserControl
 
     private void TabControl_FontChanged(object? sender, EventArgs e)
     {
-        foreach (TabPage t in TabPages)
+        foreach (var t in TabPages)
         {
             t.Font = Font;
         }
@@ -1130,7 +1130,7 @@ public partial class TabControl : UserControl
 
     private void TabControl_ForeColorChanged(object? sender, EventArgs e)
     {
-        foreach (TabPage t in TabPages)
+        foreach (var t in TabPages)
         {
             t.ForeColor = ForeColor;
         }
@@ -1307,6 +1307,7 @@ public partial class TabControl : UserControl
         public int TabHeight { get; }
 
         [Description("Gets or sets an array of System.Drawing.Point structures that represents the points through which the tab path is constructed.")]
+        [SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "Won't change interface now")]
         public Point[] Points { get; set; }
     }
 
@@ -1335,7 +1336,7 @@ public partial class TabControl : UserControl
     }
 
     [Description("Contains a collection of MdiTabCtrl.TabPage objects.")]
-    public sealed class TabPageCollection : CollectionBase
+    public sealed class TabPageCollection : Collection<TabPage>
     {
         private readonly TabControl _tabControl;
         private bool _isReorder;
@@ -1355,9 +1356,6 @@ public partial class TabControl : UserControl
 
         internal event EventHandler? TabRemoved;
 
-        [Description("Gets a TabPage in the position Index from the collection.")]
-        public TabPage this[int index] => (TabPage)List[index]!;
-
         [Description("Gets a TabPage associated with the Form from the collection.")]
         public TabPage? this[Form form]
         {
@@ -1368,14 +1366,11 @@ public partial class TabControl : UserControl
             }
         }
 
-        [Description("Returns the index of the specified TabPage in the collection.")]
-        public int IndexOf(TabPage tabPage) => List.IndexOf(tabPage);
-
         public void SetIndex(TabPage tabPage, int value)
         {
             _isReorder = true;
-            List.Remove(tabPage);
-            List.Insert(value, tabPage);
+            Items.Remove(tabPage);
+            Items.Insert(value, tabPage);
             _tabControl.ArrangeItems();
             _isReorder = false;
         }
@@ -1384,9 +1379,9 @@ public partial class TabControl : UserControl
         public int IndexOf(Form form)
         {
             var ret = -1;
-            for (var i = 0; i < List.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
-                if (((TabPage)List[i]!).InternalForm.Equals(form))
+                if (Items[i]!.InternalForm.Equals(form))
                 {
                     ret = i;
                     break;
@@ -1461,14 +1456,14 @@ public partial class TabControl : UserControl
             tabPage.EnterForm += TabPage_Enter;
             tabPage.LeaveForm += TabPage_Leave;
 
-            List.Add(tabPage);
+            Add(tabPage);
             _tabControl.ResumeLayout();
             tabPage.ResumeLayout();
             return tabPage;
         }
 
         [Description("Removes a TabPage from the collection.")]
-        public void Remove(TabPage tabPage)
+        new public void Remove(TabPage tabPage)
         {
             try
             {
@@ -1479,7 +1474,7 @@ public partial class TabControl : UserControl
                     _tabControl.pnlBottom.Controls[1].Visible = true;
                 }
 
-                List.Remove(tabPage);
+                Items.Remove(tabPage);
                 TabRemoved?.Invoke(this, EventArgs.Empty);
             }
             catch { }
@@ -1500,7 +1495,7 @@ public partial class TabControl : UserControl
         [Description("Returns the selected TabPage.")]
         public TabPage? SelectedTab()
         {
-            foreach (TabPage t in List)
+            foreach (var t in Items)
             {
                 if (t.IsSelected)
                 {
@@ -1514,9 +1509,9 @@ public partial class TabControl : UserControl
         [Description("Returns the index of the selected TabPage.")]
         public int SelectedIndex()
         {
-            for (var i = 0; i < List.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
-                if (((TabPage)List[i]!).IsSelected)
+                if (Items[i]!.IsSelected)
                 {
                     return i;
                 }
@@ -1525,52 +1520,50 @@ public partial class TabControl : UserControl
             return -1;
         }
 
-        protected override void OnInsertComplete(int index, object? value)
+        protected override void InsertItem(int index, TabPage item)
         {
-            base.OnInsertComplete(index, value);
+            base.InsertItem(index, item);
             if (_isReorder)
             {
                 return;
             }
 
-            _tabControl.pnlBottom.Controls.Add(((TabPage)value!).InternalForm);
-            _tabControl.pnlTabs.Controls.Add((TabPage)value);
-            ((TabPage)value).Select();
+            _tabControl.pnlBottom.Controls.Add(item.InternalForm);
+            _tabControl.pnlTabs.Controls.Add(item);
+            item.Select();
             _tabControl._addingPage = false;
             _tabControl.ArrangeItems();
             _tabControl._background.Visible = false;
         }
 
-        protected override void OnRemoveComplete(int index, object? value)
+        protected override void RemoveItem(int index)
         {
-            base.OnRemoveComplete(index, value);
+            var value = this[index];
+
+            base.RemoveItem(index);
+
             if (_isReorder)
             {
                 return;
             }
 
-            if (List.Count is 0)
+            if (Items.Count is 0)
             {
                 _tabControl._background.Visible = true;
             }
 
             _tabControl.ArrangeItems();
-            _tabControl.pnlBottom.Controls.Remove(((TabPage)value!).InternalForm);
-            ((TabPage)value).InternalForm.Dispose();
-            _tabControl.pnlTabs.Controls.Remove((TabPage)value);
-            ((TabPage)value).Dispose();
+            _tabControl.pnlBottom.Controls.Remove(value!.InternalForm);
+            value.InternalForm.Dispose();
+            _tabControl.pnlTabs.Controls.Remove(value);
+            value.Dispose();
             _tabControl.SelectItem(tabPage: null);
         }
 
-        protected override void OnClear()
+        protected override void ClearItems()
         {
-            base.OnClear();
+            base.ClearItems();
             _tabControl._background.Visible = true;
-        }
-
-        protected override void OnClearComplete()
-        {
-            base.OnClearComplete();
             _tabControl.pnlBottom.Controls.Clear();
             _tabControl.pnlTabs.Controls.Clear();
         }
@@ -1613,11 +1606,11 @@ public partial class TabControl : UserControl
         [SuppressMessage("Style", "IDE0370:Remove unnecessary suppression", Justification = "Suppression is necessary for NETFRAMEWORK")]
         private TabPage? GetTabPage(TabPage tabPage, int x, int y)
         {
-            for (var i = 0; i < List.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
-                var page = (TabPage)List[i]!;
+                var page = Items[i]!;
                 if (!ReferenceEquals(page, tabPage) && page.TabVisible
-                    && page.RectangleToScreen(page.ClientRectangle).Contains(tabPage.PointToScreen(new Point(x, y))))
+                    && page.RectangleToScreen(page.ClientRectangle).Contains(tabPage.PointToScreen(new(x, y))))
                 {
                     return page;
                 }
