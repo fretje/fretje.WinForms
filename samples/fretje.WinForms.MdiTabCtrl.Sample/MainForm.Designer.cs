@@ -12,34 +12,8 @@ partial class MainForm
     private IContainer components = null;
 
     /// <summary>
-    /// The tab control.
-    /// </summary>
-    private fretje.WinForms.MdiTabCtrl.TabControl _tabControl;
-
-    /// <summary>
-    /// The menu strip.
-    /// </summary>
-    private MenuStrip menuStrip;
-
-    /// <summary>
-    /// The file menu.
-    /// </summary>
-    private ToolStripMenuItem fileMenu;
-
-    /// <summary>
-    /// The new tab menu item.
-    /// </summary>
-    private ToolStripMenuItem newTabItem;
-
-    /// <summary>
-    /// The exit menu item.
-    /// </summary>
-    private ToolStripMenuItem exitItem;
-
-    /// <summary>
     /// Clean up any resources being used.
     /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
         if (disposing && (components != null))
@@ -59,11 +33,11 @@ partial class MainForm
     private void InitializeComponent()
     {
         _tabControl = new TabControl();
-        menuStrip = new MenuStrip();
-        fileMenu = new ToolStripMenuItem();
-        newTabItem = new ToolStripMenuItem();
-        exitItem = new ToolStripMenuItem();
-        menuStrip.SuspendLayout();
+        _menuStrip = new MenuStrip();
+        _fileMenu = new ToolStripMenuItem();
+        _newTabItem = new ToolStripMenuItem();
+        _exitItem = new ToolStripMenuItem();
+        _menuStrip.SuspendLayout();
         SuspendLayout();
         // 
         // _tabControl
@@ -76,33 +50,33 @@ partial class MainForm
         // 
         // menuStrip
         // 
-        menuStrip.Items.AddRange(new ToolStripItem[] { fileMenu });
-        menuStrip.Location = new Point(0, 0);
-        menuStrip.Name = "menuStrip";
-        menuStrip.Size = new Size(738, 24);
-        menuStrip.TabIndex = 1;
-        menuStrip.Text = "MenuStrip";
+        _menuStrip.Items.AddRange(new ToolStripItem[] { _fileMenu });
+        _menuStrip.Location = new Point(0, 0);
+        _menuStrip.Name = "menuStrip";
+        _menuStrip.Size = new Size(738, 24);
+        _menuStrip.TabIndex = 1;
+        _menuStrip.Text = "MenuStrip";
         // 
         // fileMenu
         // 
-        fileMenu.DropDownItems.AddRange(new ToolStripItem[] { newTabItem, exitItem });
-        fileMenu.Name = "fileMenu";
-        fileMenu.Size = new Size(37, 20);
-        fileMenu.Text = "&File";
+        _fileMenu.DropDownItems.AddRange(new ToolStripItem[] { _newTabItem, _exitItem });
+        _fileMenu.Name = "fileMenu";
+        _fileMenu.Size = new Size(37, 20);
+        _fileMenu.Text = "&File";
         // 
         // newTabItem
         // 
-        newTabItem.Name = "newTabItem";
-        newTabItem.Size = new Size(119, 22);
-        newTabItem.Text = "&New Tab";
-        newTabItem.Click += OnNewTab;
+        _newTabItem.Name = "newTabItem";
+        _newTabItem.Size = new Size(119, 22);
+        _newTabItem.Text = "&New Tab";
+        _newTabItem.Click += OnNewTab;
         // 
         // exitItem
         // 
-        exitItem.Name = "exitItem";
-        exitItem.Size = new Size(119, 22);
-        exitItem.Text = "E&xit";
-        exitItem.Click += OnExit;
+        _exitItem.Name = "exitItem";
+        _exitItem.Size = new Size(119, 22);
+        _exitItem.Text = "E&xit";
+        _exitItem.Click += OnExit;
         // 
         // MainForm
         // 
@@ -110,16 +84,22 @@ partial class MainForm
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(738, 487);
         Controls.Add(_tabControl);
-        Controls.Add(menuStrip);
+        Controls.Add(_menuStrip);
         KeyPreview = true;
-        MainMenuStrip = menuStrip;
+        MainMenuStrip = _menuStrip;
         Name = "MainForm";
         Text = "MdiTabCtrl Sample - Demonstrating all features";
-        menuStrip.ResumeLayout(false);
-        menuStrip.PerformLayout();
+        _menuStrip.ResumeLayout(false);
+        _menuStrip.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
 
     #endregion
+
+    private fretje.WinForms.MdiTabCtrl.TabControl _tabControl;
+    private MenuStrip _menuStrip;
+    private ToolStripMenuItem _fileMenu;
+    private ToolStripMenuItem _newTabItem;
+    private ToolStripMenuItem _exitItem;
 }

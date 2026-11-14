@@ -1,7 +1,7 @@
 ﻿<Project Sdk="fretje.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net10.0-windows;net472</TargetFrameworks>
+    <TargetFrameworks>net11.0-windows;net10.0-windows;net472</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 

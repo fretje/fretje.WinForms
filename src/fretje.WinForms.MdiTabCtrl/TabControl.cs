@@ -7,35 +7,35 @@ namespace fretje.WinForms.MdiTabCtrl;
 [DesignTimeVisible(true)]
 public partial class TabControl : UserControl
 {
-    internal const ToolStripRenderMode _defaultRenderMode = ToolStripRenderMode.ManagerRenderMode;
-    internal static readonly Padding _defaultPadding = new(0, 0, 0, 0);
-    internal static readonly Color _defaultBackLowColor = SystemColors.ControlLightLight;
-    internal static readonly Color _defaultBackHighColor = SystemColors.Control;
-    internal static readonly Color _defaultBorderColor = SystemColors.ControlDarkDark;
-    internal static readonly Color _defaultTabBackHighColor = SystemColors.Window;
-    internal static readonly Color _defaultTabBackLowColor = SystemColors.Control;
-    internal static readonly Color _defaultTabBackHighColorDisabled = SystemColors.Control;
-    internal static readonly Color _defaultTabBackLowColorDisabled = SystemColors.ControlDark;
-    internal static readonly Color _defaultBorderColorDisabled = SystemColors.ControlDark;
-    internal static readonly Color _defaultForeColorDisabled = SystemColors.ControlText;
-    internal static readonly Color _defaultControlButtonBackHighColor = SystemColors.GradientInactiveCaption;
-    internal static readonly Color _defaultControlButtonBackLowColor = SystemColors.GradientInactiveCaption;
-    internal static readonly Color _defaultControlButtonBorderColor = SystemColors.HotTrack;
-    internal static readonly Color _defaultControlButtonForeColor = SystemColors.ControlText;
-    internal static readonly Size _defaultTabCloseButtonSize = new(17, 17);
-    internal static readonly Size _defaultTabIconSize = new(16, 16);
-    internal static readonly Color _defaultTabCloseButtonBackHighColor = Color.IndianRed;
-    internal static readonly Color _defaultTabCloseButtonBackHighColorDisabled = Color.LightGray;
-    internal static readonly Color _defaultTabCloseButtonBackHighColorHot = Color.LightCoral;
-    internal static readonly Color _defaultTabCloseButtonBackLowColor = Color.Firebrick;
-    internal static readonly Color _defaultTabCloseButtonBackLowColorDisabled = Color.DarkGray;
-    internal static readonly Color _defaultTabCloseButtonBackLowColorHot = Color.IndianRed;
-    internal static readonly Color _defaultTabCloseButtonBorderColor = Color.DarkRed;
-    internal static readonly Color _defaultTabCloseButtonBorderColorDisabled = Color.Gray;
-    internal static readonly Color _defaultTabCloseButtonBorderColorHot = Color.Firebrick;
-    internal static readonly Color _defaultTabCloseButtonForeColor = Color.White;
-    internal static readonly Color _defaultTabCloseButtonForeColorDisabled = Color.White;
-    internal static readonly Color _defaultTabCloseButtonForeColorHot = Color.White;
+    private const ToolStripRenderMode _defaultRenderMode = ToolStripRenderMode.ManagerRenderMode;
+    private static readonly Padding _defaultPadding = new(0, 0, 0, 0);
+    private static readonly Color _defaultBackLowColor = SystemColors.ControlLightLight;
+    private static readonly Color _defaultBackHighColor = SystemColors.Control;
+    private static readonly Color _defaultBorderColor = SystemColors.ControlDarkDark;
+    private static readonly Color _defaultTabBackHighColor = SystemColors.Window;
+    private static readonly Color _defaultTabBackLowColor = SystemColors.Control;
+    private static readonly Color _defaultTabBackHighColorDisabled = SystemColors.Control;
+    private static readonly Color _defaultTabBackLowColorDisabled = SystemColors.ControlDark;
+    private static readonly Color _defaultBorderColorDisabled = SystemColors.ControlDark;
+    private static readonly Color _defaultForeColorDisabled = SystemColors.ControlText;
+    private static readonly Color _defaultControlButtonBackHighColor = SystemColors.GradientInactiveCaption;
+    private static readonly Color _defaultControlButtonBackLowColor = SystemColors.GradientInactiveCaption;
+    private static readonly Color _defaultControlButtonBorderColor = SystemColors.HotTrack;
+    private static readonly Color _defaultControlButtonForeColor = SystemColors.ControlText;
+    private static readonly Size _defaultTabCloseButtonSize = new(17, 17);
+    private static readonly Size _defaultTabIconSize = new(16, 16);
+    private static readonly Color _defaultTabCloseButtonBackHighColor = Color.IndianRed;
+    private static readonly Color _defaultTabCloseButtonBackHighColorDisabled = Color.LightGray;
+    private static readonly Color _defaultTabCloseButtonBackHighColorHot = Color.LightCoral;
+    private static readonly Color _defaultTabCloseButtonBackLowColor = Color.Firebrick;
+    private static readonly Color _defaultTabCloseButtonBackLowColorDisabled = Color.DarkGray;
+    private static readonly Color _defaultTabCloseButtonBackLowColorHot = Color.IndianRed;
+    private static readonly Color _defaultTabCloseButtonBorderColor = Color.DarkRed;
+    private static readonly Color _defaultTabCloseButtonBorderColorDisabled = Color.Gray;
+    private static readonly Color _defaultTabCloseButtonBorderColorHot = Color.Firebrick;
+    private static readonly Color _defaultTabCloseButtonForeColor = Color.White;
+    private static readonly Color _defaultTabCloseButtonForeColorDisabled = Color.White;
+    private static readonly Color _defaultTabCloseButtonForeColorHot = Color.White;
 
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is disposed in the Disposed handler")]
     private readonly Panel _background = new();
@@ -102,8 +102,8 @@ public partial class TabControl : UserControl
         ResetTabIconSize();
         ResetRenderMode();
         AdjustHeight();
-        DropButton.RenderMode = RenderMode;
-        CloseButton.RenderMode = RenderMode;
+        _dropButton.RenderMode = RenderMode;
+        _closeButton.RenderMode = RenderMode;
         ResumeLayout();
         Disposed += (_, _) => _background.Dispose();
     }
@@ -133,7 +133,7 @@ public partial class TabControl : UserControl
     public override bool Focused => _focused;
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-    public object? SelectedForm => pnlBottom.Controls.Count > 0 ? pnlBottom.Controls[0] : null;
+    public object? SelectedForm => _pnlBottom.Controls.Count > 0 ? _pnlBottom.Controls[0] : null;
 
     [Category("Layout"), DefaultValue(FlowDirection.LeftToRight), Description("Gets or sets the the direction which the tabs are drawn.")]
     public FlowDirection TabsDirection
@@ -369,8 +369,8 @@ public partial class TabControl : UserControl
             if (field != value)
             {
                 field = value;
-                pnlTabs.Height = field;
-                pnlTabs.Top = pnlTop.Height - pnlTabs.Height;
+                _pnlTabs.Height = field;
+                _pnlTabs.Top = _pnlTop.Height - _pnlTabs.Height;
                 AdjustHeight();
                 foreach (var t in TabPages)
                 {
@@ -549,12 +549,12 @@ public partial class TabControl : UserControl
     [Category("Layout"), DefaultValue(false), Description("Gets or sets a value indicating whether the close button is displayed or not.")]
     public bool CloseButtonVisible
     {
-        get => CloseButton.Visible;
+        get => _closeButton.Visible;
         set
         {
-            if (CloseButton.Visible != value)
+            if (_closeButton.Visible != value)
             {
-                CloseButton.Visible = value;
+                _closeButton.Visible = value;
                 SetControlsSizeLocation();
             }
         }
@@ -563,12 +563,12 @@ public partial class TabControl : UserControl
     [Category("Layout"), DefaultValue(true), Description("Gets or sets a value indicating whether the drop button is displayed or not.")]
     public bool DropButtonVisible
     {
-        get => DropButton.Visible;
+        get => _dropButton.Visible;
         set
         {
-            if (DropButton.Visible != value)
+            if (_dropButton.Visible != value)
             {
-                DropButton.Visible = value;
+                _dropButton.Visible = value;
                 SetControlsSizeLocation();
             }
         }
@@ -608,51 +608,51 @@ public partial class TabControl : UserControl
     [Category("Layout"), Description("Gets or sets the amount of space around the form on the control's tab pages.")]
     new public Padding Padding
     {
-        get => pnlBottom.Padding;
-        set => pnlBottom.Padding = value;
+        get => _pnlBottom.Padding;
+        set => _pnlBottom.Padding = value;
     }
 
     [Category("Appearance"), Description("Gets or sets the System.Drawing.Color structure that represents the starting color of the Background linear gradient for the control button.")]
     public Color ControlButtonBackHighColor
     {
-        get => DropButton.BackHighColor;
+        get => _dropButton.BackHighColor;
         set
         {
-            DropButton.BackHighColor = value;
-            CloseButton.BackHighColor = value;
+            _dropButton.BackHighColor = value;
+            _closeButton.BackHighColor = value;
         }
     }
 
     [Category("Appearance"), Description("Gets or sets the System.Drawing.Color structure that represents the ending color of the Background linear gradient for the control button.")]
     public Color ControlButtonBackLowColor
     {
-        get => DropButton.BackLowColor;
+        get => _dropButton.BackLowColor;
         set
         {
-            DropButton.BackLowColor = value;
-            CloseButton.BackLowColor = value;
+            _dropButton.BackLowColor = value;
+            _closeButton.BackLowColor = value;
         }
     }
 
     [Category("Appearance"), Description("Gets or sets the System.Drawing.Color structure that represents the border color for the control button.")]
     public Color ControlButtonBorderColor
     {
-        get => DropButton.BorderColor;
+        get => _dropButton.BorderColor;
         set
         {
-            DropButton.BorderColor = value;
-            CloseButton.BorderColor = value;
+            _dropButton.BorderColor = value;
+            _closeButton.BorderColor = value;
         }
     }
 
     [Category("Appearance"), Description("Gets or sets the System.Drawing.Color structure that represents the ForeColor for the control button.")]
     public Color ControlButtonForeColor
     {
-        get => DropButton.ForeColor;
+        get => _dropButton.ForeColor;
         set
         {
-            DropButton.ForeColor = value;
-            CloseButton.ForeColor = value;
+            _dropButton.ForeColor = value;
+            _closeButton.ForeColor = value;
         }
     }
 
@@ -690,8 +690,8 @@ public partial class TabControl : UserControl
                 t.BorderColor = value;
             }
 
-            pnlTabs.Invalidate();
-            pnlTop.Invalidate();
+            _pnlTabs.Invalidate();
+            _pnlTop.Invalidate();
         }
     }
 
@@ -705,9 +705,9 @@ public partial class TabControl : UserControl
         set
         {
             _renderMode = value;
-            DropButton.RenderMode = value;
-            CloseButton.RenderMode = value;
-            WinMenu.RenderMode = value;
+            _dropButton.RenderMode = value;
+            _closeButton.RenderMode = value;
+            _winMenu.RenderMode = value;
             foreach (var t in TabPages)
             {
                 t.RenderMode = value;
@@ -725,7 +725,7 @@ public partial class TabControl : UserControl
             field = value;
             if (value is { })
             {
-                WinMenu.Renderer = value;
+                _winMenu.Renderer = value;
             }
         }
     }
@@ -842,40 +842,40 @@ public partial class TabControl : UserControl
 
     public void ResetForeColorDisabled() => _foreColorDisabled = _defaultForeColorDisabled;
 
-    public bool ShouldSerializePadding() => pnlBottom.Padding != _defaultPadding;
+    public bool ShouldSerializePadding() => _pnlBottom.Padding != _defaultPadding;
 
-    public void ResetPadding() => pnlBottom.Padding = _defaultPadding;
+    public void ResetPadding() => _pnlBottom.Padding = _defaultPadding;
 
-    public bool ShouldSerializeControlButtonBackHighColor() => DropButton.BackHighColor != _defaultControlButtonBackHighColor;
+    public bool ShouldSerializeControlButtonBackHighColor() => _dropButton.BackHighColor != _defaultControlButtonBackHighColor;
 
     public void ResetControlButtonBackHighColor()
     {
-        DropButton.BackHighColor = _defaultControlButtonBackHighColor;
-        CloseButton.BackHighColor = _defaultControlButtonBackHighColor;
+        _dropButton.BackHighColor = _defaultControlButtonBackHighColor;
+        _closeButton.BackHighColor = _defaultControlButtonBackHighColor;
     }
 
-    public bool ShouldSerializeControlButtonBackLowColor() => DropButton.BackLowColor != _defaultControlButtonBackLowColor;
+    public bool ShouldSerializeControlButtonBackLowColor() => _dropButton.BackLowColor != _defaultControlButtonBackLowColor;
 
     public void ResetControlButtonBackLowColor()
     {
-        DropButton.BackLowColor = _defaultControlButtonBackLowColor;
-        CloseButton.BackLowColor = _defaultControlButtonBackLowColor;
+        _dropButton.BackLowColor = _defaultControlButtonBackLowColor;
+        _closeButton.BackLowColor = _defaultControlButtonBackLowColor;
     }
 
-    public bool ShouldSerializeControlButtonBorderColor() => DropButton.BorderColor != _defaultControlButtonBorderColor;
+    public bool ShouldSerializeControlButtonBorderColor() => _dropButton.BorderColor != _defaultControlButtonBorderColor;
 
     public void ResetControlButtonBorderColor()
     {
-        DropButton.BorderColor = _defaultControlButtonBorderColor;
-        CloseButton.BorderColor = _defaultControlButtonBorderColor;
+        _dropButton.BorderColor = _defaultControlButtonBorderColor;
+        _closeButton.BorderColor = _defaultControlButtonBorderColor;
     }
 
-    public bool ShouldSerializeControlButtonForeColor() => DropButton.ForeColor != _defaultControlButtonForeColor;
+    public bool ShouldSerializeControlButtonForeColor() => _dropButton.ForeColor != _defaultControlButtonForeColor;
 
     public void ResetControlButtonForeColor()
     {
-        DropButton.ForeColor = _defaultControlButtonForeColor;
-        CloseButton.ForeColor = _defaultControlButtonForeColor;
+        _dropButton.ForeColor = _defaultControlButtonForeColor;
+        _closeButton.ForeColor = _defaultControlButtonForeColor;
     }
 
     public bool ShouldSerializeBackLowColor() => _backLowColor != _defaultBackLowColor;
@@ -943,8 +943,8 @@ public partial class TabControl : UserControl
 
     private void SetControlsSizeLocation()
     {
-        pnlControls.Width = DropButton.Visible && CloseButton.Visible ? 43 : DropButton.Visible || CloseButton.Visible ? 25 : 3;
-        pnlControls.Left = Width - pnlControls.Width;
+        _pnlControls.Width = _dropButton.Visible && _closeButton.Visible ? 43 : _dropButton.Visible || _closeButton.Visible ? 25 : 3;
+        _pnlControls.Left = Width - _pnlControls.Width;
         CheckVisibility();
     }
 
@@ -952,24 +952,24 @@ public partial class TabControl : UserControl
     {
         if (Alignment is TabAlignment.Top)
         {
-            pnlTop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlTop.Height = pnlTabs.Height + TabTop;
-            pnlTop.Top = TopSeparator ? 2 : 0;
-            pnlTabs.Top = TabTop;
-            pnlBottom.Height = Height - (pnlTop.Height + (TopSeparator ? 2 : 0));
-            pnlBottom.Top = Height - pnlBottom.Height;
+            _pnlTop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _pnlTop.Height = _pnlTabs.Height + TabTop;
+            _pnlTop.Top = TopSeparator ? 2 : 0;
+            _pnlTabs.Top = TabTop;
+            _pnlBottom.Height = Height - (_pnlTop.Height + (TopSeparator ? 2 : 0));
+            _pnlBottom.Top = Height - _pnlBottom.Height;
         }
         else
         {
-            pnlTop.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlTop.Height = pnlTabs.Height + TabTop;
-            pnlTop.Top = Height - pnlTop.Height;
-            pnlTabs.Top = 0;
-            pnlBottom.Height = Height - (pnlTop.Height + (TopSeparator ? 2 : 0));
-            pnlBottom.Top = TopSeparator ? 2 : 0;
+            _pnlTop.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            _pnlTop.Height = _pnlTabs.Height + TabTop;
+            _pnlTop.Top = Height - _pnlTop.Height;
+            _pnlTabs.Top = 0;
+            _pnlBottom.Height = Height - (_pnlTop.Height + (TopSeparator ? 2 : 0));
+            _pnlBottom.Top = TopSeparator ? 2 : 0;
         }
 
-        pnlTop.Invalidate();
+        _pnlTop.Invalidate();
     }
 
     private void ArrangeItems()
@@ -979,15 +979,15 @@ public partial class TabControl : UserControl
             return;
         }
 
-        pnlTabs.SuspendLayout();
+        _pnlTabs.SuspendLayout();
         var x = _leftOffset;
         for (var i = 0; i < TabPages.Count; i++)
         {
-            TabPages[i].TabVisible = x + TabPages[i].Width < pnlControls.Left;
+            TabPages[i].TabVisible = x + TabPages[i].Width < _pnlControls.Left;
             if (TabPages[i].IsSelected && !TabPages[i].TabVisible)
             {
                 SelectItem(TabPages[i]);
-                pnlTabs.ResumeLayout();
+                _pnlTabs.ResumeLayout();
                 return;
             }
 
@@ -1015,7 +1015,7 @@ public partial class TabControl : UserControl
             }
         }
 
-        pnlTabs.ResumeLayout();
+        _pnlTabs.ResumeLayout();
     }
 
     private void CheckVisibility()
@@ -1028,7 +1028,7 @@ public partial class TabControl : UserControl
         var x = _leftOffset;
         for (var i = 0; i < TabPages.Count; i++)
         {
-            if (TabPages[i].TabVisible != (x + TabPages[i].Width < pnlControls.Left))
+            if (TabPages[i].TabVisible != (x + TabPages[i].Width < _pnlControls.Left))
             {
                 if (TabPages[i].TabVisible)
                 {
@@ -1053,7 +1053,7 @@ public partial class TabControl : UserControl
             }
 
             x += TabPages[i].Width + TabOffset - 1;
-            if (x > pnlControls.Left)
+            if (x > _pnlControls.Left)
             {
                 return;
             }
@@ -1095,10 +1095,10 @@ public partial class TabControl : UserControl
             tabPage.BringToFront();
             tabPage.InternalForm.BringToFront();
             tabPage.InternalForm.Focus();
-            if (pnlBottom.Controls.Count > 1)
+            if (_pnlBottom.Controls.Count > 1)
             {
-                pnlBottom.Controls[1].Visible = false;
-                pnlBottom.Controls[1].Dock = DockStyle.None;
+                _pnlBottom.Controls[1].Visible = false;
+                _pnlBottom.Controls[1].Dock = DockStyle.None;
             }
 
             tabPage.IsSelected = true;
@@ -1107,11 +1107,11 @@ public partial class TabControl : UserControl
                 TabPages.SetIndex(tabPage, 0);
             }
         }
-        else if (pnlTabs.Controls.Count > 0)
+        else if (_pnlTabs.Controls.Count > 0)
         {
             foreach (var t in TabPages)
             {
-                if (t.InternalForm.Equals(pnlBottom.Controls[0]))
+                if (t.InternalForm.Equals(_pnlBottom.Controls[0]))
                 {
                     t.Select();
                     break;
@@ -1150,38 +1150,38 @@ public partial class TabControl : UserControl
 
     private void PositionButtons()
     {
-        DropButton.Top = (int)Math.Ceiling((pnlTop.Height - DropButton.Height) / 2.0) + (Alignment is TabAlignment.Top && TopSeparator ? -1 : 0);
-        CloseButton.Top = DropButton.Top;
+        _dropButton.Top = (int)Math.Ceiling((_pnlTop.Height - _dropButton.Height) / 2.0) + (Alignment is TabAlignment.Top && TopSeparator ? -1 : 0);
+        _closeButton.Top = _dropButton.Top;
     }
 
     private void PnlTop_Paint(object? sender, PaintEventArgs e)
     {
-        using (LinearGradientBrush brush = new(new Point(0, 0), new Point(0, pnlTop.Height), Helper.RenderColors.BackHighColor(_renderMode, BackHighColor), Helper.RenderColors.BackLowColor(_renderMode, BackLowColor)))
+        using (LinearGradientBrush brush = new(new Point(0, 0), new Point(0, _pnlTop.Height), Helper.RenderColors.BackHighColor(_renderMode, BackHighColor), Helper.RenderColors.BackLowColor(_renderMode, BackLowColor)))
         {
-            e.Graphics.FillRectangle(brush, new Rectangle(0, 0, pnlTop.Width, pnlTop.Height));
+            e.Graphics.FillRectangle(brush, new Rectangle(0, 0, _pnlTop.Width, _pnlTop.Height));
         }
 
         using Pen pen = new(Helper.RenderColors.BorderColor(_renderMode, BorderColor));
         if (Alignment is TabAlignment.Top)
         {
-            e.Graphics.DrawLine(pen, 0, pnlTop.Height - 1, pnlTop.Width + 1, pnlTop.Height - 1);
+            e.Graphics.DrawLine(pen, 0, _pnlTop.Height - 1, _pnlTop.Width + 1, _pnlTop.Height - 1);
         }
         else
         {
-            e.Graphics.DrawLine(pen, 0, 0, pnlTop.Width + 1, 0);
+            e.Graphics.DrawLine(pen, 0, 0, _pnlTop.Width + 1, 0);
         }
     }
 
     private void DropButton_MouseDown(object? sender, MouseEventArgs e)
     {
-        WinMenu.Items.Clear();
+        _winMenu.Items.Clear();
         for (var i = 0; i < TabPages.Count; i++)
         {
-            WinMenu.Items.Add(TabPages[i].MenuItem);
+            _winMenu.Items.Add(TabPages[i].MenuItem);
             TabPages[i].MenuItem.Click += MenuClick;
         }
 
-        WinMenu.Show(pnlTop, pnlTop.Width - WinMenu.Width, pnlTop.Height - 1);
+        _winMenu.Show(_pnlTop, _pnlTop.Width - _winMenu.Width, _pnlTop.Height - 1);
     }
 
     private void MenuClick(object? sender, EventArgs e)
@@ -1443,7 +1443,7 @@ public partial class TabControl : UserControl
             tabPage.Left = _tabControl._leftOffset;
             tabPage.Height = _tabControl.TabHeight;
 
-            _tabControl.TabToolTip.SetToolTip(tabPage, tabPage.InternalForm.Text);
+            _tabControl._tabToolTip.SetToolTip(tabPage, tabPage.InternalForm.Text);
 
             tabPage.Click += TabPage_Clicked;
             tabPage.Close += TabPage_Closed;
@@ -1468,10 +1468,10 @@ public partial class TabControl : UserControl
             try
             {
                 _tabControl._isDelete = true;
-                if (_tabControl.pnlBottom.Controls.Count > 1)
+                if (_tabControl._pnlBottom.Controls.Count > 1)
                 {
-                    _tabControl.pnlBottom.Controls[1].Dock = DockStyle.Fill;
-                    _tabControl.pnlBottom.Controls[1].Visible = true;
+                    _tabControl._pnlBottom.Controls[1].Dock = DockStyle.Fill;
+                    _tabControl._pnlBottom.Controls[1].Visible = true;
                 }
 
                 Items.Remove(tabPage);
@@ -1483,7 +1483,7 @@ public partial class TabControl : UserControl
         public Form TearOff(TabPage tabPage)
         {
             var f = tabPage.InternalForm;
-            _tabControl.pnlBottom.Controls.Remove(f);
+            _tabControl._pnlBottom.Controls.Remove(f);
             tabPage.InternalForm = new();
             Remove(tabPage);
             f.TopLevel = true;
@@ -1528,8 +1528,8 @@ public partial class TabControl : UserControl
                 return;
             }
 
-            _tabControl.pnlBottom.Controls.Add(item.InternalForm);
-            _tabControl.pnlTabs.Controls.Add(item);
+            _tabControl._pnlBottom.Controls.Add(item.InternalForm);
+            _tabControl._pnlTabs.Controls.Add(item);
             item.Select();
             _tabControl._addingPage = false;
             _tabControl.ArrangeItems();
@@ -1553,9 +1553,9 @@ public partial class TabControl : UserControl
             }
 
             _tabControl.ArrangeItems();
-            _tabControl.pnlBottom.Controls.Remove(value!.InternalForm);
+            _tabControl._pnlBottom.Controls.Remove(value!.InternalForm);
             value.InternalForm.Dispose();
-            _tabControl.pnlTabs.Controls.Remove(value);
+            _tabControl._pnlTabs.Controls.Remove(value);
             value.Dispose();
             _tabControl.SelectItem(tabPage: null);
         }
@@ -1564,8 +1564,8 @@ public partial class TabControl : UserControl
         {
             base.ClearItems();
             _tabControl._background.Visible = true;
-            _tabControl.pnlBottom.Controls.Clear();
-            _tabControl.pnlTabs.Controls.Clear();
+            _tabControl._pnlBottom.Controls.Clear();
+            _tabControl._pnlTabs.Controls.Clear();
         }
 
         private void TabPage_Clicked(object? sender, EventArgs e)

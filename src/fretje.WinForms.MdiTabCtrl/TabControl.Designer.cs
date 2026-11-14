@@ -6,114 +6,14 @@ namespace fretje.WinForms.MdiTabCtrl
 {
     partial class TabControl
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private IContainer components = null!;
-        internal Panel pnlTop = null!;
-        internal Panel pnlTabs = null!;
-        internal Panel pnlBottom = null!;
-        internal ContextMenuStrip WinMenu = null!;
-        internal ControlButton DropButton = null!;
-        internal ToolTip TabToolTip = null!;
-        internal ControlButton CloseButton = null!;
-        internal Panel pnlControls = null!;
 
-        private void InitializeComponent()
-        {
-            components = new Container();
-            pnlTop = new Panel();
-            pnlControls = new Panel();
-            DropButton = new ControlButton();
-            CloseButton = new ControlButton();
-            pnlTabs = new Panel();
-            pnlBottom = new Panel();
-            WinMenu = new ContextMenuStrip(components);
-            TabToolTip = new ToolTip(components);
-            pnlTop.SuspendLayout();
-            pnlControls.SuspendLayout();
-            SuspendLayout();
-            // 
-            // pnlTop
-            // 
-            pnlTop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pnlTop.BackColor = Color.Transparent;
-            pnlTop.Controls.Add(pnlControls);
-            pnlTop.Controls.Add(pnlTabs);
-            pnlTop.Location = new Point(0, 0);
-            pnlTop.Name = "pnlTop";
-            pnlTop.Size = new Size(200, 31);
-            pnlTop.TabIndex = 6;
-            pnlTop.SizeChanged += PnlTop_SizeChanged;
-            pnlTop.Paint += PnlTop_Paint;
-            // 
-            // pnlControls
-            // 
-            pnlControls.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            pnlControls.Controls.Add(DropButton);
-            pnlControls.Controls.Add(CloseButton);
-            pnlControls.Location = new Point(175, 0);
-            pnlControls.Name = "pnlControls";
-            pnlControls.Size = new Size(25, 30);
-            pnlControls.TabIndex = 1;
-            // 
-            // DropButton
-            // 
-            DropButton.BackColor = Color.Transparent;
-            DropButton.Location = new Point(4, 8);
-            DropButton.Name = "DropButton";
-            DropButton.Size = new Size(17, 15);
-            DropButton.Style = ControlButton.ButtonStyle.Drop;
-            DropButton.TabIndex = 0;
-            DropButton.MouseDown += DropButton_MouseDown;
-            // 
-            // CloseButton
-            // 
-            CloseButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CloseButton.BackColor = Color.Transparent;
-            CloseButton.Location = new Point(4, 8);
-            CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(17, 15);
-            CloseButton.Style = ControlButton.ButtonStyle.Close;
-            CloseButton.TabIndex = 0;
-            CloseButton.Visible = false;
-            CloseButton.MouseDown += CloseButton_MouseDown;
-            // 
-            // pnlTabs
-            // 
-            pnlTabs.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            pnlTabs.BackColor = Color.Transparent;
-            pnlTabs.Location = new Point(0, 3);
-            pnlTabs.Name = "pnlTabs";
-            pnlTabs.Size = new Size(200, 28);
-            pnlTabs.TabIndex = 0;
-            // 
-            // pnlBottom
-            // 
-            pnlBottom.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlBottom.Location = new Point(0, 31);
-            pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(200, 99);
-            pnlBottom.TabIndex = 7;
-            // 
-            // WinMenu
-            // 
-            WinMenu.Name = "WinMenu";
-            WinMenu.Size = new Size(61, 4);
-            //
-            // TabControl
-            //
-            AutoScaleMode = AutoScaleMode.None;
-            Controls.Add(pnlTop);
-            Controls.Add(pnlBottom);
-            Name = "TabControl";
-            Size = new Size(200, 130);
-            FontChanged += TabControl_FontChanged;
-            ForeColorChanged += TabControl_ForeColorChanged;
-            Paint += TabControl_Paint;
-            Resize += TabControl_Resize;
-            pnlTop.ResumeLayout(false);
-            pnlControls.ResumeLayout(false);
-            ResumeLayout(false);
-        }
-
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -122,5 +22,121 @@ namespace fretje.WinForms.MdiTabCtrl
             }
             base.Dispose(disposing);
         }
+
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new Container();
+            _pnlTop = new Panel();
+            _pnlControls = new Panel();
+            _dropButton = new ControlButton();
+            _closeButton = new ControlButton();
+            _pnlTabs = new Panel();
+            _pnlBottom = new Panel();
+            _winMenu = new ContextMenuStrip(components);
+            _tabToolTip = new ToolTip(components);
+            _pnlTop.SuspendLayout();
+            _pnlControls.SuspendLayout();
+            SuspendLayout();
+            // 
+            // pnlTop
+            // 
+            _pnlTop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _pnlTop.BackColor = Color.Transparent;
+            _pnlTop.Controls.Add(_pnlControls);
+            _pnlTop.Controls.Add(_pnlTabs);
+            _pnlTop.Location = new Point(0, 0);
+            _pnlTop.Name = "pnlTop";
+            _pnlTop.Size = new Size(200, 31);
+            _pnlTop.TabIndex = 6;
+            _pnlTop.SizeChanged += PnlTop_SizeChanged;
+            _pnlTop.Paint += PnlTop_Paint;
+            // 
+            // pnlControls
+            // 
+            _pnlControls.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            _pnlControls.Controls.Add(_dropButton);
+            _pnlControls.Controls.Add(_closeButton);
+            _pnlControls.Location = new Point(175, 0);
+            _pnlControls.Name = "pnlControls";
+            _pnlControls.Size = new Size(25, 30);
+            _pnlControls.TabIndex = 1;
+            // 
+            // DropButton
+            // 
+            _dropButton.BackColor = Color.Transparent;
+            _dropButton.Location = new Point(4, 8);
+            _dropButton.Name = "DropButton";
+            _dropButton.Size = new Size(17, 15);
+            _dropButton.Style = ControlButton.ButtonStyle.Drop;
+            _dropButton.TabIndex = 0;
+            _dropButton.MouseDown += DropButton_MouseDown;
+            // 
+            // CloseButton
+            // 
+            _closeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            _closeButton.BackColor = Color.Transparent;
+            _closeButton.Location = new Point(4, 8);
+            _closeButton.Name = "CloseButton";
+            _closeButton.Size = new Size(17, 15);
+            _closeButton.Style = ControlButton.ButtonStyle.Close;
+            _closeButton.TabIndex = 0;
+            _closeButton.Visible = false;
+            _closeButton.MouseDown += CloseButton_MouseDown;
+            // 
+            // pnlTabs
+            // 
+            _pnlTabs.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            _pnlTabs.BackColor = Color.Transparent;
+            _pnlTabs.Location = new Point(0, 3);
+            _pnlTabs.Name = "pnlTabs";
+            _pnlTabs.Size = new Size(200, 28);
+            _pnlTabs.TabIndex = 0;
+            // 
+            // pnlBottom
+            // 
+            _pnlBottom.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            _pnlBottom.Location = new Point(0, 31);
+            _pnlBottom.Name = "pnlBottom";
+            _pnlBottom.Size = new Size(200, 99);
+            _pnlBottom.TabIndex = 7;
+            // 
+            // WinMenu
+            // 
+            _winMenu.Name = "WinMenu";
+            _winMenu.Size = new Size(61, 4);
+            //
+            // TabControl
+            //
+            AutoScaleMode = AutoScaleMode.None;
+            Controls.Add(_pnlTop);
+            Controls.Add(_pnlBottom);
+            Name = "TabControl";
+            Size = new Size(200, 130);
+            FontChanged += TabControl_FontChanged;
+            ForeColorChanged += TabControl_ForeColorChanged;
+            Paint += TabControl_Paint;
+            Resize += TabControl_Resize;
+            _pnlTop.ResumeLayout(false);
+            _pnlControls.ResumeLayout(false);
+            ResumeLayout(false);
+        }
+
+        #endregion
+
+        internal Panel _pnlTop = null!;
+        internal Panel _pnlTabs = null!;
+        internal Panel _pnlBottom = null!;
+        internal ContextMenuStrip _winMenu = null!;
+        internal ControlButton _dropButton = null!;
+        internal ToolTip _tabToolTip = null!;
+        internal ControlButton _closeButton = null!;
+        internal Panel _pnlControls = null!;
     }
 }
