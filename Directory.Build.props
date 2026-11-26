@@ -4,8 +4,4 @@
     <RepositoryUrl>https://github.com/fretje/fretje.WinForms</RepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
-    <PackageReference Include="Meziantou.Polyfill" PrivateAssets="all" />
-  </ItemGroup>
-
 </Project>
