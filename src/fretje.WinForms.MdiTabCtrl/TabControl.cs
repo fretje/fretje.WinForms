@@ -1474,7 +1474,7 @@ public partial class TabControl : UserControl
                     _tabControl._pnlBottom.Controls[1].Visible = true;
                 }
 
-                Items.Remove(tabPage);
+                base.Remove(tabPage);
                 TabRemoved?.Invoke(this, EventArgs.Empty);
             }
             catch { }
